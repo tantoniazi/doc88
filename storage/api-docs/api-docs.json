@@ -1,0 +1,66 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "PROVA DOC88",
+        "description": "PROVA DOC88",
+        "contact": {
+            "email": "tiago.antoniazi@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://doc88.local:8282/",
+            "description": "dev"
+        }
+    ],
+    "paths": {
+        "/api/v1/cliente": {
+            "get": {
+                "tags": [
+                    "cliente"
+                ],
+                "summary": "recuperar lista de cliente",
+                "description": "recuperar lista de cliente",
+                "operationId": "api.v1.cliente.index",
+                "responses": {
+                    "200": {
+                        "description": "sucesso"
+                    },
+                    "404": {
+                        "description": "erro"
+                    }
+                }
+            }
+        },
+        "/api/v1/cliente/{id}": {
+            "get": {
+                "tags": [
+                    "cliente"
+                ],
+                "summary": "recuperar lista de cliente",
+                "description": "recuperar lista de cliente",
+                "operationId": "api.v1.cliente.show",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do cliente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucesso"
+                    },
+                    "404": {
+                        "description": "erro"
+                    }
+                }
+            }
+        }
+    }
+}

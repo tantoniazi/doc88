@@ -1,0 +1,33 @@
+version: '3'
+services:
+  doc88-dev:
+    container_name: doc88-dev
+    build:
+        context: ./.docker
+    ports:
+      - "8282:80"
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - doc88-db
+    links:
+      - doc88-db
+    networks:
+      - doc88-network
+  doc88-db:
+    container_name: doc88-db
+    image: mysql:5.7
+    ports:
+      - 3300:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=doc88
+      - MYSQL_USER=doc88
+      - MYSQL_PASSWORD=doc88
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - doc88-network
+networks:
+  doc88-network:
+    driver: bridge
