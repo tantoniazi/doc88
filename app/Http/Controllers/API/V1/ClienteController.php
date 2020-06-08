@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
-use Cliente;
+use App\Model\Cliente;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
+use Input;
+
 
 class ClienteController extends Controller
 {
@@ -83,12 +87,214 @@ class ClienteController extends Controller
                 'id' => 'required|string'
             ])->validate();
 
-            $row = $this->mode->find($id);
+            $row = $this->model->find($id);
             return $row;
         } catch (\Exception $e) {
             return $e->getMessage();
         }
     }
 
+
+     /**
+     *
+     * @OA\Patch(
+     *      path="/api/v1/pastel/{id}",
+     *      operationId="api.v1.pastel.update",
+     *      tags={"pastel"},
+     *      summary="atualizar dados do pastel",
+     *      description="atualizar dados do pastel",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="id do pastel",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="sucesso"
+     *       ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="erro"
+     *       )
+     *     )
+     */
+
+    public function update(Request $request, $id)
+    {
+        try {
+            Validator::make($request->all(), [
+                'nome' => 'string',
+                'email' => 'string|unique:cliente|max:255',
+                'telefone' => 'string',
+                'data_nascimento' => 'date',
+                'endereco' => 'string',
+                'complemento' => 'string',
+                'bairro' => 'string',
+                'cep' => 'string',
+            ])->validate();
+                
+            dd(Input::all());
+            $row = $this->model->find($id);
+            $row->nome = $request->nome;
+            $row->email = $request->email;
+            $row->telefone = $request->telefone;
+            $row->data_nascimento = $request->data_nascimento;
+            $row->endereco = $request->endereco;
+            $row->complemento = $request->complemento;
+            $row->bairro = $request->bairro;
+            $row->cep = $request->cep;
+            
+            if(!$row->save())
+                throw new \Exception("Erro ao atualizar");
+
+            return $this->model->find($id);
+            
+        } catch (ValidationException $e){
+            return $e->errors();
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+
+    /**
+     *
+     * @OA\Post(
+     *      path="/api/v1/cliente/{id}",
+     *      operationId="api.v1.cliente.show",
+     *      tags={"cliente"},
+     *      summary="salvar cliente",
+     *      description="salvar cliente",
+     *      @OA\Parameter(
+     *          name="nome",
+     *          description="nome",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="email",
+     *          description="email",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="email"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="telefone",
+     *          description="telefone",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="image"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="data_nascimento",
+     *          description="data_nascimento",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="date"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="endereco",
+     *          description="endereco",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="complemento",
+     *          description="complemento",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="bairro",
+     *          description="bairro",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="cep",
+     *          description="cep",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="sucesso"
+     *       ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="erro"
+     *       )
+     *     )
+     */
+
+    public function store(Request $request)
+    {
+        try {
+             Validator::make($request->all(), [
+                'nome' => 'required|string',
+                'email' => 'required|string|unique:cliente|max:255',
+                'telefone' => 'required|string',
+                'data_nascimento' => 'required|date',
+                'endereco' => 'required|string',
+                'complemento' => 'required|string',
+                'bairro' => 'required|string',
+                'cep' => 'required|string',
+            ])->validate();
+   
+            $params = [
+                'nome' => $request->nome,
+                'email' => $request->email,
+                'telefone' => $request->telefone,
+                'data_nascimento' => $request->data_nascimento,
+                'endereco' => $request->endereco,
+                'complemento' => $request->complemento,
+                'bairro' => $request->bairro,
+                'cep' => $request->cep,
+            ];
+
+            $row = $this->model->create($params);
+            return $row;
+        } catch (ValidationException $e){
+            return $e->errors();
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function destroy($id)
+	{
+		try{
+            $row = $this->model->find($id);
+		    $row->delete();
+            return true;
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
 
 }

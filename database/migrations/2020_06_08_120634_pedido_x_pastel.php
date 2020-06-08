@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Pedido extends Migration
+class PedidoXPastel extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class Pedido extends Migration
      */
     public function up()
     {
-        Schema::create('pedido', function (Blueprint $table) {
+        Schema::create('pedido_x_pastel', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('cliente_id');
-            $table->foreign('cliente_id')->references('id')->on('cliente');
+            $table->unsignedBigInteger('pedido_id');
+            $table->foreign('pedido_id')->references('id')->on('pedido');
+            $table->unsignedBigInteger('pastel_id');
+            $table->foreign('pastel_id')->references('id')->on('pastel');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +31,6 @@ class Pedido extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pedido');
+        Schema::dropIfExists('pedido_x_pastel');
     }
 }

@@ -10,7 +10,7 @@
     },
     "servers": [
         {
-            "url": "https://doc88.local:8282/",
+            "url": "https://localhost:8282/",
             "description": "dev"
         }
     ],
@@ -46,6 +46,172 @@
                         "name": "id",
                         "in": "path",
                         "description": "id do cliente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucesso"
+                    },
+                    "404": {
+                        "description": "erro"
+                    }
+                }
+            }
+        },
+        "/api/v1/pastel": {
+            "get": {
+                "tags": [
+                    "pastel"
+                ],
+                "summary": "recuperar lista de pasteis",
+                "description": "recuperar lista de pasteis",
+                "operationId": "api.v1.pastel.index",
+                "responses": {
+                    "200": {
+                        "description": "sucesso"
+                    },
+                    "404": {
+                        "description": "erro"
+                    }
+                }
+            }
+        },
+        "/api/v1/pastel/{id}": {
+            "get": {
+                "tags": [
+                    "pastel"
+                ],
+                "summary": "recuperar dados de um pastel",
+                "description": "recuperar dados de um pastel",
+                "operationId": "api.v1.pastel.show",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do pastel",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucesso"
+                    },
+                    "404": {
+                        "description": "erro"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "pastel"
+                ],
+                "summary": "salvar pastel",
+                "description": "salvar pastel",
+                "operationId": "api.v1.pastel.show",
+                "parameters": [
+                    {
+                        "name": "nome",
+                        "in": "query",
+                        "description": "nome do pastel",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "preco",
+                        "in": "query",
+                        "description": "preco do pastel",
+                        "required": true,
+                        "schema": {
+                            "type": "numeric"
+                        }
+                    },
+                    {
+                        "name": "foto",
+                        "in": "query",
+                        "description": "foto do pastel",
+                        "required": true,
+                        "schema": {
+                            "type": "image"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucesso"
+                    },
+                    "404": {
+                        "description": "erro"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "pastel"
+                ],
+                "summary": "atualizar dados do pastel",
+                "description": "atualizar dados do pastel",
+                "operationId": "api.v1.pastel.update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do pastel",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucesso"
+                    },
+                    "404": {
+                        "description": "erro"
+                    }
+                }
+            }
+        },
+        "/api/v1/pedido": {
+            "get": {
+                "tags": [
+                    "pedido"
+                ],
+                "summary": "recuperar lista de pedido",
+                "description": "recuperar lista de pedido",
+                "operationId": "api.v1.pedido.index",
+                "responses": {
+                    "200": {
+                        "description": "sucesso"
+                    },
+                    "404": {
+                        "description": "erro"
+                    }
+                }
+            }
+        },
+        "/api/v1/pedido/{id}": {
+            "get": {
+                "tags": [
+                    "pedido"
+                ],
+                "summary": "recuperar lista de pedido",
+                "description": "recuperar lista de pedido",
+                "operationId": "api.v1.pedido.show",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do pedido",
                         "required": true,
                         "schema": {
                             "type": "integer"

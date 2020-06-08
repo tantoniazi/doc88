@@ -11,6 +11,16 @@ class Cliente extends Model
 
     protected $table = 'cliente';
 
+    public $fillable = [
+        'nome' , 
+        'email' ,
+        'telefone' ,
+        'data_nascimento' ,
+        'endereco' ,
+        'complemento' ,
+        'bairro' ,
+        'cep' 
+    ];
     public function pedido()
     {
         return $this->belongsTo(App\Model\Pedido::class);
