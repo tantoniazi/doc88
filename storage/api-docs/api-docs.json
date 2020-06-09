@@ -60,6 +60,222 @@
                         "description": "erro"
                     }
                 }
+            },
+            "post": {
+                "tags": [
+                    "cliente"
+                ],
+                "summary": "salvar cliente",
+                "description": "salvar cliente",
+                "operationId": "api.v1.cliente.show",
+                "parameters": [
+                    {
+                        "name": "nome",
+                        "in": "query",
+                        "description": "nome",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "email",
+                        "required": true,
+                        "schema": {
+                            "type": "email"
+                        }
+                    },
+                    {
+                        "name": "telefone",
+                        "in": "query",
+                        "description": "telefone",
+                        "required": true,
+                        "schema": {
+                            "type": "image"
+                        }
+                    },
+                    {
+                        "name": "data_nascimento",
+                        "in": "query",
+                        "description": "data_nascimento",
+                        "required": true,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "endereco",
+                        "in": "query",
+                        "description": "endereco",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "complemento",
+                        "in": "query",
+                        "description": "complemento",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "bairro",
+                        "in": "query",
+                        "description": "bairro",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "cep",
+                        "in": "query",
+                        "description": "cep",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucesso"
+                    },
+                    "404": {
+                        "description": "erro"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "cliente"
+                ],
+                "summary": "deletar um cliente",
+                "description": "deletar um cliente",
+                "operationId": "api.v1.cliente.destroy",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do cliente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucesso"
+                    },
+                    "404": {
+                        "description": "erro"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "cliente"
+                ],
+                "summary": "atualizar dados do cliente",
+                "description": "atualizar dados do cliente",
+                "operationId": "api.v1.cliente.update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do cliente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "nome",
+                        "in": "path",
+                        "description": "nome",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "email",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "telefone",
+                        "in": "path",
+                        "description": "telefone",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "data_nascimento",
+                        "in": "path",
+                        "description": "data_nascimento",
+                        "required": false,
+                        "schema": {
+                            "type": "date"
+                        }
+                    },
+                    {
+                        "name": "endereco",
+                        "in": "path",
+                        "description": "endereco",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "complemento",
+                        "in": "path",
+                        "description": "complemento",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "bairro",
+                        "in": "path",
+                        "description": "bairro",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "cep",
+                        "in": "path",
+                        "description": "cep",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucesso"
+                    },
+                    "404": {
+                        "description": "erro"
+                    }
+                }
             }
         },
         "/api/v1/pastel": {

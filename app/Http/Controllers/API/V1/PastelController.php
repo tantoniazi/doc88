@@ -5,9 +5,9 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\Controller;
 use App\Model\Pastel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File; 
 use Illuminate\Support\Facades\Validator;
-use Image;
+use Illuminate\Validation\ValidationException;
 
 class PastelController extends Controller
 {
@@ -125,6 +125,8 @@ class PastelController extends Controller
             ])->validate();
             $row = $this->model->find($id)->update($request->all());
             return $row;
+        } catch (ValidationException $e){
+            return $e->errors();
         } catch (\Exception $e) {
             return $e->getMessage();
         }
@@ -187,21 +189,67 @@ class PastelController extends Controller
             ])->validate();
    
 
-            $path   = $request->file('foto');
-            $img = Image::make($path->getRealPath());
-            
-            dd($img);
-            $img->move('/public/pastel');
+            $file   = $request->file('foto');
+            $destinationPath = 'storage/pastel/';
+            $originalFile = $file->getClientOriginalName();
+            $filename=strtotime(date('Y-m-d-H:isa')).$originalFile;
+            $file->move($destinationPath, $filename);
 
             $params = [
                 'nome' => $request->nome , 
                 'preco' => $request->preco , 
-                'foto' =>  'public/pastel'
+                'foto' =>  $destinationPath . $filename
             ];
 
             $row = $this->model->create($params);
             return $row;
+        } catch (ValidationException $e){
+            return $e->errors();
         } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    /**
+     *
+     * @OA\Delete(
+     *      path="/api/v1/pastel/{id}",
+     *      operationId="api.v1.pastel.destroy",
+     *      tags={"pastel"},
+     *      summary="deletar um pastel",
+     *      description="deletar um pastel",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="id do pastel",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="sucesso"
+     *       ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="erro"
+     *       )
+     *     )
+     */
+
+    public function destroy($id)
+	{
+		try{
+            $row = $this->model->find($id);
+            if($row){
+                if (File::exists($row->foto)) {
+                    unlink($row->foto);
+                }
+                $row->delete();
+            }
+		    return true;  
+        }catch(\Exception $e){
             return $e->getMessage();
         }
     }

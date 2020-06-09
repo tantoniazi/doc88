@@ -15,4 +15,10 @@ class Pastel extends Model
     {
         return $this->belongsTo(App\Model\Pedido::class);
     }
+
+    public $fillable = [
+        'nome' ,
+        'preco' ,
+        'foto'
+    ];
 }

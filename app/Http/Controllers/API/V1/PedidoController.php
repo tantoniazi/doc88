@@ -18,8 +18,8 @@ class PedidoController extends Controller
     /**
      *
      * @OA\Get(
-     *      path="/api/v1/pedido",
-     *      operationId="api.v1.pedido.index",
+     *      path="/api/v1/cliente/{cliente_id}/pedido",
+     *      operationId="api.v1.cliente/pedido.index",
      *      tags={"pedido"},
      *      summary="recuperar lista de pedido",
      *      description="recuperar lista de pedido",
@@ -48,9 +48,9 @@ class PedidoController extends Controller
     /**
      *
      * @OA\Get(
-     *      path="/api/v1/pedido/{id}",
-     *      operationId="api.v1.pedido.show",
-     *      tags={"pedido"},
+     *      path="/api/v1/cliente/{cliente_id}/pedido/{id}",
+     *      operationId="api.v1.cliente.pedido.show",
+     *      tags={"cliente/pedido"},
      *      summary="recuperar lista de pedido",
      *      description="recuperar lista de pedido",
      *      @OA\Parameter(
@@ -73,7 +73,7 @@ class PedidoController extends Controller
      *     )
      */
 
-    public function show(Request $request , $id)
+    public function show(Request $request , $cliente_id , $id)
     {
         try {
             $request->request->add(
@@ -83,7 +83,10 @@ class PedidoController extends Controller
                 'id' => 'required|string'
             ])->validate();
 
-            $row = $this->mode->find($id);
+            $row = $this->model->get([
+                'cliente_id' => $cliente_id , 
+                'id' => $id
+            ]);
             return $row;
         } catch (\Exception $e) {
             return $e->getMessage();

@@ -8,8 +8,6 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
-use Input;
-
 
 class ClienteController extends Controller
 {
@@ -98,18 +96,90 @@ class ClienteController extends Controller
      /**
      *
      * @OA\Patch(
-     *      path="/api/v1/pastel/{id}",
-     *      operationId="api.v1.pastel.update",
-     *      tags={"pastel"},
-     *      summary="atualizar dados do pastel",
-     *      description="atualizar dados do pastel",
+     *      path="/api/v1/cliente/{id}",
+     *      operationId="api.v1.cliente.update",
+     *      tags={"cliente"},
+     *      summary="atualizar dados do cliente",
+     *      description="atualizar dados do cliente",
      *      @OA\Parameter(
      *          name="id",
-     *          description="id do pastel",
+     *          description="id do cliente",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
      *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="nome",
+     *          description="nome",
+     *          required=false,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="email",
+     *          description="email",
+     *          required=false,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="telefone",
+     *          description="telefone",
+     *          required=false,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="data_nascimento",
+     *          description="data_nascimento",
+     *          required=false,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="date"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="endereco",
+     *          description="endereco",
+     *          required=false,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="complemento",
+     *          description="complemento",
+     *          required=false,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="bairro",
+     *          description="bairro",
+     *          required=false,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="cep",
+     *          description="cep",
+     *          required=false,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
      *          )
      *      ),
      *      @OA\Response(
@@ -137,18 +207,9 @@ class ClienteController extends Controller
                 'cep' => 'string',
             ])->validate();
                 
-            dd(Input::all());
-            $row = $this->model->find($id);
-            $row->nome = $request->nome;
-            $row->email = $request->email;
-            $row->telefone = $request->telefone;
-            $row->data_nascimento = $request->data_nascimento;
-            $row->endereco = $request->endereco;
-            $row->complemento = $request->complemento;
-            $row->bairro = $request->bairro;
-            $row->cep = $request->cep;
+            $row = $this->model->find($id)->update($request->all());
             
-            if(!$row->save())
+            if(!$row)
                 throw new \Exception("Erro ao atualizar");
 
             return $this->model->find($id);
@@ -286,12 +347,42 @@ class ClienteController extends Controller
         }
     }
 
+
+    /**
+     *
+     * @OA\Delete(
+     *      path="/api/v1/cliente/{id}",
+     *      operationId="api.v1.cliente.destroy",
+     *      tags={"cliente"},
+     *      summary="deletar um cliente",
+     *      description="deletar um cliente",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="id do cliente",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="sucesso"
+     *       ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="erro"
+     *       )
+     *     )
+     */
+
     public function destroy($id)
 	{
 		try{
             $row = $this->model->find($id);
-		    $row->delete();
-            return true;
+            if($row)
+                $row->delete();
+		    return true;  
         }catch(\Exception $e){
             return $e->getMessage();
         }
