@@ -13,7 +13,7 @@ class Pastel extends Model
     protected $table = 'pastel';
     public function pedido()
     {
-        return $this->belongsTo(App\Model\Pedido::class);
+        return $this->belongsTo(\App\Model\Pedido::class);
     }
 
     public $fillable = [

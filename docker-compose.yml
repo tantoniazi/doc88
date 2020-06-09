@@ -28,6 +28,14 @@ services:
       - ./:/var/www/html
     networks:
       - doc88-network
+  doc88-mailhog:
+    container_name: doc88-mailhog
+    image: mailhog/mailhog
+    ports:
+    - "1026:1025"
+    - "8026:8025"
+    networks:
+    - doc88-network
 networks:
   doc88-network:
     driver: bridge

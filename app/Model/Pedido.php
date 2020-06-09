@@ -12,17 +12,6 @@ class Pedido extends Model
 
     protected $table = 'pedido';
     
-    public function cliente()
-    {
-        return $this->hasOne(App\Model\Cliente::class);
-    }
-
-
-    public function pastel()
-    {
-        return $this->hasMany(App\Model\Pastel::class);
-    }
-
 
     public function get(array $params) : Collection
     {
@@ -34,4 +23,8 @@ class Pedido extends Model
             ->where('pedido.cliente_id','=', $params['cliente_id'])
             ->get();
     }
+
+    public $fillable = [
+        'cliente_id'
+    ];
 }

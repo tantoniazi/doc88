@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {  
-    return redirect('api/documentation');
-});
+// Route::get('/', function (Request $request) {  
+//     return $request->redirect('api/documentation');
+// });
 
 
 
