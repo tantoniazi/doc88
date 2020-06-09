@@ -12,3 +12,6 @@ RUN chmod 777 -Rf /var/www /var/www/.* \
 
 VOLUME /var/www/html
 WORKDIR /var/www/html
+RUN "composer install"
+CMD "php artisan migrate"
+CMD "php artisan db:seed"
